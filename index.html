@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Feliz Natal</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='https://cdn.jsdelivr.net/npm/three@0.145.0/build/three.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/three@0.145.0/examples/js/controls/OrbitControls.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/three@0.145.0/examples/js/math/MeshSurfaceSampler.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/three@0.145.0/examples/js/postprocessing/EffectComposer.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/three@0.145.0/examples/js/postprocessing/RenderPass.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/three@0.145.0/examples/js/postprocessing/ShaderPass.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/three@0.145.0/examples/js/postprocessing/UnrealBloomPass.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/three@0.145.0/examples/js/shaders/LuminosityHighPassShader.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/three@0.145.0/examples/js/shaders/CopyShader.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/three@0.145.0/examples/js/loaders/FontLoader.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/three@0.145.0/examples/js/geometries/TextGeometry.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/three@0.145.0/examples/js/modifiers/CurveModifier.js'></script>
+</head>
+<body>
+    <script type="x-shader/x-vertex" id="vertexshader">
+        varying vec2 vUv;
+        void main() {
+            vUv = uv;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+        }
+    </script>
+    <script type="x-shader/x-fragment" id="fragmentshader">
+        uniform sampler2D baseTexture;
+        uniform sampler2D bloomTexture;
+        varying vec2 vUv;
+        void main() {
+            gl_FragColor = ( texture2D( baseTexture, vUv ) + vec4( 1.0 ) * texture2D( bloomTexture, vUv ) );
+        }
+    </script>
+    <script src='main.js'></script>
+</body>
+</html>
